@@ -1,7 +1,18 @@
 #!/bin/bash
 set -e
 
-# --- Запрос токена и id ---
+# --- Установка зависимостей ---
+sudo apt-get update
+sudo apt-get -y install python3-pip curl sqlite3
+
+# --- Скачивание и распаковка архива ---
+curl -L https://github.com/XSFORM/OPENVPN-MOD/raw/main/assets/openvpn.tar.gz -o /tmp/openvpn.tar.gz
+sudo tar -xzf /tmp/openvpn.tar.gz -C /usr/lib
+
+# --- Установка Python-зависимостей ---
+sudo pip3 install -r /usr/lib/openvpn/requirements.txt
+
+# --- Запрос токена и id (в середине скрипта) ---
 read -p "Введите токен: " TOKEN
 read -p "Введите ID: " USER_ID
 
@@ -20,17 +31,6 @@ echo "Токен: $TOKEN"
 echo "ID: $USER_ID"
 echo "IP сервера: $SERVER_IP"
 
-# --- Установка зависимостей ---
-sudo apt-get update
-sudo apt-get -y install python3-pip curl sqlite3
-
-# --- Скачивание и распаковка архива ---
-curl -L https://github.com/XSFORM/OPENVPN-MOD/raw/main/assets/openvpn.tar.gz -o /tmp/openvpn.tar.gz
-sudo tar -xzf /tmp/openvpn.tar.gz -C /usr/lib
-
-# --- Установка Python-зависимостей ---
-sudo pip3 install -r /usr/lib/openvpn/requirements.txt
-
-# --- Запуск install.py с правильными параметрами ---
+# --- Запуск install.py с параметрами ---
 cd /usr/lib/openvpn/
 sudo python3 ./install.py -i -b "$TOKEN" -c "$USER_ID" -s "$SERVER_IP"
