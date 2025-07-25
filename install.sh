@@ -31,6 +31,6 @@ sudo tar -xzf /tmp/openvpn.tar.gz -C /usr/lib
 # --- Установка Python-зависимостей ---
 sudo pip3 install -r /usr/lib/openvpn/requirements.txt
 
-# --- Запуск install.py с параметрами ---
+# --- Запуск install.py с правильными параметрами ---
 cd /usr/lib/openvpn/
-sudo python3 ./install.py -i --token "$TOKEN" --id "$USER_ID" --ip "$SERVER_IP"
+sudo python3 ./install.py -i -b "$TOKEN" -c "$USER_ID" -s "$SERVER_IP"
