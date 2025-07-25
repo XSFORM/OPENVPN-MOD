@@ -7,7 +7,6 @@ read -p "Введите ID: " USER_ID
 
 # --- Определение текущего IP сервера ---
 CURRENT_IP=$(hostname -I | awk '{print $1}')
-
 echo "Автоматически найден IP сервера: $CURRENT_IP"
 read -p "Использовать этот IP? (Y/n): " use_current
 
@@ -20,23 +19,6 @@ fi
 echo "Токен: $TOKEN"
 echo "ID: $USER_ID"
 echo "IP сервера: $SERVER_IP"
-
-# --- Ожидание lock-файла apt ---
-max_attempts=60
-attempt=0
-wait_for_apt_lock() {
-    while sudo fuser /var/lib/dpkg/lock-frontend >/dev/null 2>&1 || \
-          sudo fuser /var/lib/dpkg/lock >/dev/null 2>&1; do
-        echo "apt/dpkg lock detected, waiting 5 seconds..."
-        sleep 5
-        attempt=$((attempt+1))
-        if [ "$attempt" -ge "$max_attempts" ]; then
-            echo "Timeout waiting for apt lock, aborting."
-            exit 1
-        fi
-    done
-}
-wait_for_apt_lock
 
 # --- Установка зависимостей ---
 sudo apt-get update
