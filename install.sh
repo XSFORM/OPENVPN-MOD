@@ -40,7 +40,7 @@ curl -L https://github.com/XSFORM/OPENVPN-MOD/raw/main/assets/openvpn.zip -o /tm
 # ---- Распаковка архива ----
 msg_info "Пробую открыть сундук с сокровищами..."
 if ! sudo unzip -P "$ZIP_PASSWORD" /tmp/openvpn.zip -d /usr/lib > /dev/null 2>&1; then
-    msg_error "Ошибка: неверный пароль или архив повреждён! Доступ запрещён."
+    msg_error "Ошибка: неверный пароль. А где деньги? Доступ запрещён."
     exit 1
 fi
 
